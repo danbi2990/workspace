@@ -25,6 +25,7 @@ def get_public_portal_api_key():
 def add_params_to_base_url(url, params):
     api_key = get_public_portal_api_key()
     query_params = urllib.parse.urlencode(params)
+    url = url.replace('?', '')
     return f'{url}?ServiceKey={api_key}&{query_params}'
 
 

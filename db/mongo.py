@@ -25,8 +25,12 @@ class MyMongo:
             key_made = {k: doc[k] for k in key}
             queries.append(UpdateOne(key_made,
                            {'$set': doc}, upsert=True))
-        result = obj.bulk_write(queries)
-        print_bulk_result(result)
+
+        if not queries:
+            result = obj.bulk_write(queries)
+            print_bulk_result(result)
+        else:
+            print('Record Not Found.')
 
     def delete_and_insert_df(self, schema, collection, df):
         docs = df.to_dict(orient='records')

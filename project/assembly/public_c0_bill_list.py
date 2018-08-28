@@ -1,25 +1,31 @@
 from pprint import pprint
-import requests
-from xmltodict import parse
-from common import get_items, get_data_frame, KEY
+# import requests
+# from xmltodict import parse
+# from common import get_items, get_data_frame, KEY
 
+from api.public_portal import get_refined_dict_from_url
 
-def get_url(numOfRows=10, pageNo=1):
-    url = f'http://apis.data.go.kr/9710000/BillInfoService/getBillInfoList?'
-    url += f'ServiceKey={KEY}&numOfRows={numOfRows}&pageNo={pageNo}'
-    url += '&start_ord=20&end_ord=20'
-    return url
+url = 'http://apis.data.go.kr/9710000/BillInfoService/getBillInfoList?'
 
-r = requests.get(get_url())
-d = parse(r.text)
+params = {
+    'numOfRows': '10',
+    'pageNo': '1',
+    'start_ord': '20',
+    'end_ord': '20',
+}
+
+# r = requests.get(get_url())
+# d = parse(r.text)
 # print(d)
-d1 = get_items(d)
-print(d1['total'])
-if d1['total'] == 0:
-    print(d1['header'])
+# d1 = get_items(d)
+dct = get_refined_dict_from_url(url, params)
+# print(d1['total'])
+
+if dct['total'] == 0:
+    print(dct['header'])
 
 numOfRows = 200
-pageCnt = int(int(d1['total']) / numOfRows) + 1
+pageCnt = int(int(dct['total']) / numOfRows) + 1
 # print(pageCnt)  # 66
 
 # for i in [65]:
