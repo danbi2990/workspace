@@ -29,7 +29,8 @@ for index, row in members.iterrows():
     #     break
     df = pd.DataFrame()
     nm, hj = row['empNm'], row['hjNm']
-    pars['mem_name'], pars['hj_nm'] = nm, hj
+    pars['mem_name'], pars['hj_nm'], pars['numOfRows'] = nm, hj, 1
+
     dic = get_refined_dict_from_url(url, pars)
     total = int(dic['totalCount'])
     pars['numOfRows'] = numOfRows
@@ -38,6 +39,7 @@ for index, row in members.iterrows():
         pars['pageNo'] = p_cnt - i
         tmp = get_df_from_url(url, pars)
         df = df.append(tmp)
+
     df['empNm'] = nm
     df['hjNm'] = hj
     docs = df.to_dict(orient='records')
