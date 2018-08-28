@@ -5,7 +5,7 @@ from pymongo import UpdateOne
 
 from api.common import get_df_as_per_total, get_refined_dict_from_url, get_items_from_dict, get_df_from_url
 from db.mongo_connection import MyMongo
-from util.util import print_bulk_result
+from lib.util import print_bulk_result
 
 url = 'http://openapi.d2b.go.kr/openapi/service/BidResultInfoService/getFcltyCmpetBidResultList'
 params = {

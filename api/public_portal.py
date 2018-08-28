@@ -125,6 +125,10 @@ def save_tsv_with_multiple_pages(url, pars, path, total, numOfRows):
             print(f'{i:0>3d}-{numOfRows}.tsv saved.')
 
 
+def save_tsv_from_df(file_name, df):
+    df.to_csv(file_name, sep='\t', index=False)
+
+
 def write_log(file, msg):
     with open(file, 'a') as f:
         f.write(msg)

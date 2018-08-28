@@ -5,7 +5,7 @@ import pandas as pd
 from pymongo import UpdateOne
 
 from db.mongo_connection import MyMongo
-from util.util import print_bulk_result
+from lib.util import print_bulk_result
 
 pd.set_option('display.expand_frame_repr', False)
 with MyMongo() as db:

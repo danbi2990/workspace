@@ -4,12 +4,6 @@ from bs4 import BeautifulSoup as bs
 import requests
 
 
-# def print_bulk_result(result):
-#     print('- bulk_write result:')
-#     print('match, insert, modify, upsert')
-#     print(f'{result.matched_count} {result.inserted_count} {result.modified_count} {result.upserted_count}')
-
-
 def post_soup_from_url(url, data, encoding='utf-8'):
     response = requests.post(url, data)
     if response.status_code != 200:

@@ -1,1 +1,16 @@
 pd.set_option('display.expand_frame_repr', False)
+
+
+import sys
+proj_path = '/Users/jake/Dev/workspace'
+if proj_path not in sys.path:
+    sys.path.append(proj_path)
+sys.path
+
+
+if __name__ == "__main__" and __package__ is None:
+    import os
+    import sys
+    current_path = os.path.dirname(__file__)
+    project_path = os.path.abspath(os.path.join(current_path, '..'))
+    sys.path.append(project_path)

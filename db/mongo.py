@@ -1,6 +1,8 @@
 import socket
-from pymongo import MongoClient
+from pymongo import MongoClient, UpdateOne
 import pandas as pd
+
+from lib.util import print_bulk_result
 
 
 class MyMongo:
@@ -16,18 +18,33 @@ class MyMongo:
         self.client.close()
         print('Mongo Connection Closed.-->')
 
+    def update_one_bulk(self, schema, collection, docs, *key):
+        obj = self.get_table_obj(schema, collection)
+        queries = []
+        for doc in docs:
+            key_made = {k: doc[k] for k in key}
+            queries.append(UpdateOne(key_made,
+                           {'$set': doc}, upsert=True))
+        result = obj.bulk_write(queries)
+        print_bulk_result(result)
+
+    def delete_and_insert_df(self, schema, collection, df):
+        docs = df.to_dict(orient='records')
+        self.delete_and_insert(schema, collection, docs)
+
     def find(self, schema, collection, filter={}):
         obj = self.get_table_obj(schema, collection)
         return obj.find(filter)
 
-    def delete_and_insert(self, schema, collection, docs):
-        del_result = self.delete_many(schema, collection)
+    def delete_and_insert(self, schema, collection, docs, filter={}):
+        del_result = self.delete_many(schema, collection, filter)
         print(f'Deleted rows: {del_result.deleted_count}')
         ins_result = self.insert_many(schema, collection, docs)
         print(f'Inserted rows: {len(ins_result.inserted_ids)}')
 
     def delete_many(self, schema, collection, filter={}):
         obj = self.get_table_obj(schema, collection)
+        print(filter)
         return obj.delete_many(filter)
 
     def insert_many(self, schema, collection, docs):
