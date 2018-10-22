@@ -20,8 +20,8 @@ js_files_2 = pd.DataFrame(columns=['netLoc', 'jsFile', 'jsSource'])
 
 web_path_already = js_already['webPath'].tolist()
 for idx, row in js_files.iterrows():
-    if idx == 4:
-        break
+    # if idx == 4:
+    #     break
 
     net_loc = row['netLoc'].strip('/')
     file_path = row['jsFile'].strip('/')
