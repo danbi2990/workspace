@@ -18,8 +18,25 @@ def get_kakao_api_key():
     return api_key.strip()
 
 
-def fetch_geo_response_from_kakao(addr):
-    url = 'https://dapi.kakao.com/v2/local/search/address.json'
+def fetch_geo_response_from_kakao(addr, url_type='address'):
+    urls = {
+        'address': 'https://dapi.kakao.com/v2/local/search/address.json',
+        'keyword': 'https://dapi.kakao.com/v2/local/search/keyword.json'
+    }
+
+    def get_response_by_type(url_type, response):
+        # print(response)
+        if not response or response['meta']['total_count'] == 0:
+            return None
+
+        doc = response['documents'][0]
+        if url_type == 'address':
+            return doc['road_address'] or doc['address']
+
+        if url_type == 'keyword':
+            return doc
+
+    url = urls[url_type]
     key = get_kakao_api_key()
     headers = {'Authorization': f'KakaoAK {key}'}
     payload = {'query': addr, }
@@ -27,23 +44,25 @@ def fetch_geo_response_from_kakao(addr):
     url2 = f'{url}?{encoded}'
     res = requests.get(url2, headers=headers)
 
-    return res.json()
+    return get_response_by_type(url_type, res.json())
+    # return res.json()
 
 
-def get_and_check_geo_response(addr, key):
-    res = fetch_geo_response_from_kakao(addr)
-    if res['meta']['total_count'] != 0:
-        return res['documents'][0][key]
-    else:
-        False
+# def get_and_check_geo_response(addr, url_type='address'):
+#     res = fetch_geo_response_from_kakao(addr, url_type)
+#     print(addr)
+#     if res['meta']['total_count'] != 0:
+#         doc = res['documents'][0]
+#         return doc['road_address'] or doc['address']
+#     else:
+#         False
 
 
 def get_geocode_from_address(road_addr, old_addr, loc_name):
     if road_addr:
         addr = road_addr
-        key = 'road_address'
 
-        res = get_and_check_geo_response(addr, key)
+        res = fetch_geo_response_from_kakao(addr)
         if res:
             return res
 
@@ -51,23 +70,27 @@ def get_geocode_from_address(road_addr, old_addr, loc_name):
         if without_paren:
             addr = without_paren.group(1)
             # print(addr)
-            res = get_and_check_geo_response(addr, key)
+            res = fetch_geo_response_from_kakao(addr)
             if res:
                 return res
 
     if old_addr and not re.match(r'^\d', old_addr):
         addr = old_addr
-        key = 'address'
 
-        res = get_and_check_geo_response(addr, key)
+        res = fetch_geo_response_from_kakao(addr)
         if res:
             return res
 
         if not loc_name:
             addr = old_addr + ' ' + loc_name
 
-            res = get_and_check_geo_response(addr, key)
+            res = fetch_geo_response_from_kakao(addr)
             if res:
                 return res
+
+    if loc_name:
+        res = fetch_geo_response_from_kakao(loc_name, url_type='keyword')
+        if res:
+            return res
 
     return 'Address Not Found.'

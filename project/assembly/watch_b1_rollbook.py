@@ -17,12 +17,9 @@ with MyMongo() as db:
     confer_df = db.get_df_from_table('assembly', 'watch_conference', {'rollbook_fetched': False})
     if len(confer_df) == 0:
         print("No Conference Found.")
-    sys.exit(0)
+        sys.exit(0)
 
 confer_id_list = confer_df['confer_id'].tolist()
-
-# print(len(confer_id_list))
-# print(confer_id_list)
 
 for confer_id in confer_id_list:
     query_on_watch_conference = []
