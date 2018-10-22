@@ -31,7 +31,8 @@ for idx, row in js_files.iterrows():
     if web_path not in web_path_already:
         try:
             response = requests.get(web_path)
-        except TypeError e:
+        except TypeError:
+            print(web_path)
             continue
         js_files_2 = js_files_2.append({'netLoc': net_loc, 'jsFile': file_path, 'webPath': web_path, 'jsSource': response.text}, ignore_index=True)
 
