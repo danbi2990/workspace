@@ -29,14 +29,17 @@ for idx, row in js_files.iterrows():
 
     # print(web_path)
     if web_path not in web_path_already:
-        response = requests.get(web_path)
+        try:
+            response = requests.get(web_path)
+        except TypeError e:
+            continue
         js_files_2 = js_files_2.append({'netLoc': net_loc, 'jsFile': file_path, 'webPath': web_path, 'jsSource': response.text}, ignore_index=True)
 
-    if idx == 100:
+    if idx > 100:
         with MyMongo() as db:
             db.update_one_bulk('public_website', 'website_external_js_source', js_files_2.to_dict(orient='records'), 'webPath')
 
-    js_files_2 = pd.DataFrame(columns=['netLoc', 'jsFile', 'jsSource'])
+        js_files_2 = pd.DataFrame(columns=['netLoc', 'jsFile', 'jsSource'])
 
 
 
