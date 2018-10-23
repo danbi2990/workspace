@@ -1,8 +1,9 @@
 #%%
 import os
-from requests.exceptions import ConnectionError, ReadTimeout
+from urllib3.exceptions import ReadTimeoutError
 
 import requests
+from requests.exceptions import ConnectionError, ReadTimeout
 import pandas as pd
 
 from db.mongo import MyMongo
@@ -43,7 +44,7 @@ for idx, row in js_files.iterrows():
                     with open('external_js_log.txt', 'a') as f:
                         f.write(msg + '\n')
                     continue
-                except ReadTimeout:
+                except (ReadTimeout, ReadTimeoutError):
                     msg = f'ReadTimeout. Address: {web_path_s}'
                     print(msg)
                     with open('external_js_log.txt', 'a') as f:
