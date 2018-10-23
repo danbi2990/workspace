@@ -6,3 +6,5 @@ ipynb/
 *.tsv
 *.pyc
 .DS_STORE
+external_js_log.txt
+
