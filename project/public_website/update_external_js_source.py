@@ -1,6 +1,6 @@
 #%%
 import os
-from requests.exceptions import ConnectionError
+from requests.exceptions import ConnectionError, ReadTimeout
 
 import requests
 import pandas as pd
@@ -39,6 +39,12 @@ for idx, row in js_files.iterrows():
                     response = requests.get(web_path_s, verify=False, timeout=10)
                 except ConnectionError:
                     msg = f'ConnectionError. Address: {web_path_s}'
+                    print(msg)
+                    with open('external_js_log.txt', 'a') as f:
+                        f.write(msg + '\n')
+                    continue
+                except ReadTimeout:
+                    msg = f'ReadTimeout. Address: {web_path_s}'
                     print(msg)
                     with open('external_js_log.txt', 'a') as f:
                         f.write(msg + '\n')
