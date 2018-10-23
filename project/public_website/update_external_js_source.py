@@ -72,13 +72,13 @@ for idx, row in js_files.iterrows():
 
             continue
         except (ReadTimeout, ReadTimeoutError):
-            msg = f'ReadTimeout. Address: {web_path_s}'
+            msg = f'ReadTimeout. Address: {web_path}'
             print(msg)
             with open('external_js_log.txt', 'a') as f:
                 f.write(msg + '\n')
             continue
         except ContentDecodingError:
-            msg = f'DecodingError. Address: {web_path_s}'
+            msg = f'DecodingError. Address: {web_path}'
             print(msg)
             with open('external_js_log.txt', 'a') as f:
                 f.write(msg + '\n')
