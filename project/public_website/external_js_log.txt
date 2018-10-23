@@ -9,3 +9,6 @@ ConnectionError. Address: https://home.kban.or.kr/asset/core/js/numberUtils-1.0.
 ConnectionError. Address: https://home.kban.or.kr/asset/core/js/stringUtils-1.0.js
 ConnectionError. Address: https://home.kban.or.kr/asset/js/bootstrap.js
 ConnectionError. Address: https://home.kban.or.kr/asset/js/kban-main.js
+ReadTimeout. Address: https://www.cefv.re.kr/files/cache/ruleset/755cc5975861116547f606321d643f24.ko.js?20160523172140
+ConnectionError. Address: https://kras.gyeongnam.go.kr:80/land_info/js/caf/rp.js
+ConnectionError. Address: https://www.yangsan.go.kr/apis.daum.net/maps/maps3.js?apikey=b8e2eedfdcc62ce1aa60e6d58aee5bd0
