@@ -32,14 +32,20 @@ for idx, row in js_files.iterrows():
     # print(web_path)
     if web_path not in web_path_already:
         try:
-            response = requests.get(web_path, verify=False, timeout=10)
+            response = requests.get(web_path, verify=False, timeout=5)
         except ConnectionError:
             web_path_s = 'https://' + '/'.join([net_loc, file_path])
             if web_path_s not in web_path_already:
                 try:
-                    response = requests.get(web_path_s, verify=False, timeout=10)
+                    response = requests.get(web_path_s, verify=False, timeout=5)
                 except ConnectionError:
                     msg = f'ConnectionError. Address: {web_path_s}'
+                    print(msg)
+                    with open('external_js_log.txt', 'a') as f:
+                        f.write(msg + '\n')
+                    continue
+                except (ReadTimeout, ReadTimeoutError):
+                    msg = f'ReadTimeout. Address: {web_path_s}'
                     print(msg)
                     with open('external_js_log.txt', 'a') as f:
                         f.write(msg + '\n')
@@ -51,6 +57,7 @@ for idx, row in js_files.iterrows():
             with open('external_js_log.txt', 'a') as f:
                 f.write(msg + '\n')
             continue
+
         js_files_2 = js_files_2.append({'netLoc': net_loc, 'jsFile': file_path, 'webPath': web_path, 'jsSource': response.text}, ignore_index=True)
 
     if len(js_files_2) > 9:
