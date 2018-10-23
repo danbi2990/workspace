@@ -32,25 +32,19 @@ for idx, row in js_files.iterrows():
     if web_path not in web_path_already:
         try:
             response = requests.get(web_path)
-        # except TypeError:
-        #     msg = f'TypeError. Address: {web_path}'
-        #     print(msg)
-        #     with open('external_js_log.txt', 'a') as f:
-        #         f.write(msg + '\n')
-        #     continue
         except ConnectionError:
-            web_path = 'https://' + '/'.join([net_loc, file_path])
-            if web_path not in web_path_already:
+            web_path_s = 'https://' + '/'.join([net_loc, file_path])
+            if web_path_s not in web_path_already:
                 try:
-                    response = requests.get(web_path)
+                    response = requests.get(web_path_s)
                 except ConnectionError:
-                    msg = f'ConnectionError. Address: {web_path}'
+                    msg = f'ConnectionError. Address: {web_path_s}'
                     print(msg)
                     with open('external_js_log.txt', 'a') as f:
                         f.write(msg + '\n')
                     continue
+            continue
         js_files_2 = js_files_2.append({'netLoc': net_loc, 'jsFile': file_path, 'webPath': web_path, 'jsSource': response.text}, ignore_index=True)
-
 
     if len(js_files_2) > 9:
         with MyMongo() as db:
