@@ -36,7 +36,7 @@ for idx, row in js_files.iterrows():
             continue
         js_files_2 = js_files_2.append({'netLoc': net_loc, 'jsFile': file_path, 'webPath': web_path, 'jsSource': response.text}, ignore_index=True)
 
-    if idx > 10:
+    if len(js_files_2) > 10:
         with MyMongo() as db:
             db.update_one_bulk('public_website', 'website_external_js_source', js_files_2.to_dict(orient='records'), 'webPath')
 
