@@ -4,7 +4,8 @@ import re
 from urllib3.exceptions import ReadTimeoutError
 
 import requests
-from requests.exceptions import ConnectionError, ReadTimeout, ContentDecodingError
+from requests.exceptions import ConnectionError, ReadTimeout
+from requests.exceptions import ContentDecodingError, TooManyRedirects
 import pandas as pd
 
 from db.mongo import MyMongo
@@ -21,13 +22,7 @@ with open('external_js_log.txt', 'r') as f:
 
 js_error = re.findall(r'(http.+)\n', log)
 web_path_already = js_already['webPath'].tolist()
-print(len(web_path_already))
 web_path_already.extend(js_error)
-print(len(web_path_already))
-# print(web_path_already)
-
-# print(len(js_files))
-# js_files_filtered = js_files.loc[js_files[]]
 
 for idx, row in js_files.iterrows():
     # if idx == 4:
@@ -69,6 +64,12 @@ for idx, row in js_files.iterrows():
                     with open('external_js_log.txt', 'a') as f:
                         f.write(msg + '\n')
                     continue
+                except TooManyRedirects:
+                    msg = f'TooManyRedirects. Address: {web_path_s}'
+                    print(msg)
+                    with open('external_js_log.txt', 'a') as f:
+                        f.write(msg + '\n')
+                    continue
 
             continue
         except (ReadTimeout, ReadTimeoutError):
@@ -79,6 +80,12 @@ for idx, row in js_files.iterrows():
             continue
         except ContentDecodingError:
             msg = f'DecodingError. Address: {web_path}'
+            print(msg)
+            with open('external_js_log.txt', 'a') as f:
+                f.write(msg + '\n')
+            continue
+        except TooManyRedirects:
+            msg = f'TooManyRedirects. Address: {web_path}'
             print(msg)
             with open('external_js_log.txt', 'a') as f:
                 f.write(msg + '\n')
