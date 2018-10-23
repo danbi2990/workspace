@@ -1,5 +1,6 @@
 #%%
 import os
+import re
 from urllib3.exceptions import ReadTimeoutError
 
 import requests
@@ -19,8 +20,13 @@ with MyMongo() as db:
 
 #%%
 js_files_2 = pd.DataFrame(columns=['netLoc', 'jsFile', 'jsSource'])
+with open('external_js_log.txt', 'r') as f:
+    log = f.read()
 
+js_error = re.findall(r'(http.+)\n', log)
 web_path_already = js_already['webPath'].tolist()
+web_path_already.extend(js_error)
+
 for idx, row in js_files.iterrows():
     # if idx == 4:
     #     break
