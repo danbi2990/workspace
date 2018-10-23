@@ -1,7 +1,8 @@
 #%%
 import os
-import requests
+from httplib import BadStatusLine
 
+import requests
 import pandas as pd
 
 from db.mongo import MyMongo
@@ -19,6 +20,7 @@ with MyMongo() as db:
 js_files_2 = pd.DataFrame(columns=['netLoc', 'jsFile', 'jsSource'])
 
 web_path_already = js_already['webPath'].tolist()
+print(web_path_already)
 for idx, row in js_files.iterrows():
     # if idx == 4:
     #     break
@@ -34,6 +36,8 @@ for idx, row in js_files.iterrows():
         except TypeError:
             print(web_path)
             continue
+        except BadStatusLine:
+            print(f'Count not fetch {web_path}')
         js_files_2 = js_files_2.append({'netLoc': net_loc, 'jsFile': file_path, 'webPath': web_path, 'jsSource': response.text}, ignore_index=True)
 
     if len(js_files_2) > 10:
