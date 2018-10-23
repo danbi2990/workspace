@@ -12,10 +12,6 @@ from db.mongo import MyMongo
 #%%
 with MyMongo() as db:
     js_files = db.get_df_from_table('public_website', 'website_js_domain_proccessed')
-
-# print(js_files.head(1))
-#%%
-with MyMongo() as db:
     js_already = db.get_df_from_table('public_website', 'website_external_js_source')
 
 #%%
@@ -25,7 +21,13 @@ with open('external_js_log.txt', 'r') as f:
 
 js_error = re.findall(r'(http.+)\n', log)
 web_path_already = js_already['webPath'].tolist()
+print(len(web_path_already))
 web_path_already.extend(js_error)
+print(len(web_path_already))
+# print(web_path_already)
+
+# print(len(js_files))
+# js_files_filtered = js_files.loc[js_files[]]
 
 for idx, row in js_files.iterrows():
     # if idx == 4:
@@ -40,6 +42,11 @@ for idx, row in js_files.iterrows():
         try:
             response = requests.get(web_path, verify=False, timeout=5)
         except ConnectionError:
+            msg = f'ConnectionError. Address: {web_path}'
+            print(msg)
+            with open('external_js_log.txt', 'a') as f:
+                f.write(msg + '\n')
+
             web_path_s = 'https://' + '/'.join([net_loc, file_path])
             if web_path_s not in web_path_already:
                 try:
