@@ -31,12 +31,12 @@ for idx, row in js_files.iterrows():
     # print(web_path)
     if web_path not in web_path_already:
         try:
-            response = requests.get(web_path)
+            response = requests.get(web_path, verify=False, timeout=10)
         except ConnectionError:
             web_path_s = 'https://' + '/'.join([net_loc, file_path])
             if web_path_s not in web_path_already:
                 try:
-                    response = requests.get(web_path_s)
+                    response = requests.get(web_path_s, verify=False, timeout=10)
                 except ConnectionError:
                     msg = f'ConnectionError. Address: {web_path_s}'
                     print(msg)
