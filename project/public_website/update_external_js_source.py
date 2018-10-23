@@ -1,6 +1,6 @@
 #%%
 import os
-from http.client import BadStatusLine
+from requests.exceptions import ConnectionError
 
 import requests
 import pandas as pd
@@ -20,7 +20,6 @@ with MyMongo() as db:
 js_files_2 = pd.DataFrame(columns=['netLoc', 'jsFile', 'jsSource'])
 
 web_path_already = js_already['webPath'].tolist()
-print(web_path_already)
 for idx, row in js_files.iterrows():
     # if idx == 4:
     #     break
@@ -33,14 +32,27 @@ for idx, row in js_files.iterrows():
     if web_path not in web_path_already:
         try:
             response = requests.get(web_path)
-        except TypeError:
-            print(web_path)
-            continue
-        except BadStatusLine:
-            print(f'Count not fetch {web_path}')
+        # except TypeError:
+        #     msg = f'TypeError. Address: {web_path}'
+        #     print(msg)
+        #     with open('external_js_log.txt', 'a') as f:
+        #         f.write(msg + '\n')
+        #     continue
+        except ConnectionError:
+            web_path = 'https://' + '/'.join([net_loc, file_path])
+            if web_path not in web_path_already:
+                try:
+                    response = requests.get(web_path)
+                except ConnectionError:
+                    msg = f'ConnectionError. Address: {web_path}'
+                    print(msg)
+                    with open('external_js_log.txt', 'a') as f:
+                        f.write(msg + '\n')
+                    continue
         js_files_2 = js_files_2.append({'netLoc': net_loc, 'jsFile': file_path, 'webPath': web_path, 'jsSource': response.text}, ignore_index=True)
 
-    if len(js_files_2) > 10:
+
+    if len(js_files_2) > 9:
         with MyMongo() as db:
             db.update_one_bulk('public_website', 'website_external_js_source', js_files_2.to_dict(orient='records'), 'webPath')
 

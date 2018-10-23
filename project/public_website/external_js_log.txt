@@ -1,0 +1,11 @@
+ConnectionError. Address: http://kmtp.medicalkorea.or.kr:8443/medicaltraining/js/common2.js
+ConnectionError. Address: http://home.kban.or.kr/asset/js/bootstrap-datepicker.js
+ConnectionError. Address: http://home.kban.or.kr/asset/core/js/numberUtils-1.0.js
+ConnectionError. Address: http://home.kban.or.kr/asset/core/js/stringUtils-1.0.js
+ConnectionError. Address: http://home.kban.or.kr/asset/js/bootstrap.js
+ConnectionError. Address: http://home.kban.or.kr/asset/js/kban-main.js
+ConnectionError. Address: https://home.kban.or.kr/asset/js/bootstrap-datepicker.js
+ConnectionError. Address: https://home.kban.or.kr/asset/core/js/numberUtils-1.0.js
+ConnectionError. Address: https://home.kban.or.kr/asset/core/js/stringUtils-1.0.js
+ConnectionError. Address: https://home.kban.or.kr/asset/js/bootstrap.js
+ConnectionError. Address: https://home.kban.or.kr/asset/js/kban-main.js
