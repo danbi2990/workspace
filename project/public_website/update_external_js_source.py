@@ -1,6 +1,6 @@
 #%%
 import os
-from httplib import BadStatusLine
+from http.client import BadStatusLine
 
 import requests
 import pandas as pd
