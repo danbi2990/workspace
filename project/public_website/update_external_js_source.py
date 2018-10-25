@@ -1,5 +1,4 @@
 #%%
-import os
 import re
 from urllib3.exceptions import ReadTimeoutError
 
@@ -12,8 +11,8 @@ from db.mongo import MyMongo
 
 #%%
 with MyMongo() as db:
-    js_files = db.get_df_from_table('public_website', 'website_js_domain_proccessed')
-    js_already = db.get_df_from_table('public_website', 'website_external_js_source')
+    js_files = db.get_df_from_table('public_website', 'a4_js_files_processed')
+    js_already = db.get_df_from_table('public_website', 'a5_js_code_external')
 
 #%%
 js_files_2 = pd.DataFrame(columns=['netLoc', 'jsFile', 'jsSource'])
@@ -95,7 +94,7 @@ for idx, row in js_files.iterrows():
 
     if len(js_files_2) > 9:
         with MyMongo() as db:
-            db.update_one_bulk('public_website', 'website_external_js_source', js_files_2.to_dict(orient='records'), 'webPath')
+            db.update_one_bulk('public_website', 'a5_js_code_external', js_files_2.to_dict(orient='records'), 'webPath')
 
         js_files_2 = pd.DataFrame(columns=['netLoc', 'jsFile', 'jsSource'])
 
@@ -109,7 +108,7 @@ for idx, row in js_files.iterrows():
 
 #%%
 with MyMongo() as db:
-    db.update_one_bulk('public_website', 'website_external_js_source', js_files_2.to_dict(orient='records'), 'webPath')
+    db.update_one_bulk('public_website', 'a5_js_code_external', js_files_2.to_dict(orient='records'), 'webPath')
 
 
 #%%

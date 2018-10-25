@@ -8,7 +8,7 @@ from db.mongo import MyMongo
 
 #%%
 with MyMongo() as db:
-    url_script = db.find('public_website', 'website_login_not_from_db')
+    url_script = db.find('public_website', 'pages')
 
 
 #%%

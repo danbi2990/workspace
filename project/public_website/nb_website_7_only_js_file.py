@@ -1,4 +1,5 @@
 #%%
+import os
 from pprint import pprint
 from collections import defaultdict
 import pandas as pd
@@ -7,7 +8,7 @@ from db.mongo import MyMongo
 
 #%%
 with MyMongo() as db:
-    url_script = db.find('public_website', 'website_login_not_from_db')
+    url_script = db.find('public_website', 'a1_pages')
 
 #%%
 without_js_script = []
@@ -21,7 +22,7 @@ without_js_script[0]
 
 #%%
 with MyMongo() as db:
-    db.delete_and_insert('public_website', 'website_login_without_script', without_js_script)
+    db.delete_and_insert('public_website', 'a2_js_files', without_js_script)
 
 #%%
 
@@ -34,7 +35,6 @@ for item in without_js_script:
         domain_unique_js_file[domain] = domain_unique_js_file[domain].union(js_files)
 
 #%%
-import os
 
 df_data = []
 i = 0
@@ -58,7 +58,7 @@ df_files_per_domain['path'] = os.path.join(df_files_per_domain['netLoc'], df_fil
 
 #%%
 with MyMongo() as db:
-    db.delete_and_insert_df('public_website', 'website_js_files_per_domain', df_files_per_domain)
+    db.delete_and_insert_df('public_website', 'a3_js_files_per_domain', df_files_per_domain)
 
 #%%
 # len(df_files_per_domain)
