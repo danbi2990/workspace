@@ -32,6 +32,10 @@ class MyMongo:
         else:
             print('Record Not Found.')
 
+    def update_many_df(self, schema, collection, df, *key):
+        docs = df.to_dict(orient='records')
+        self.update_one_bulk(schema, collection, docs, key)
+
     def delete_and_insert_df(self, schema, collection, df):
         docs = df.to_dict(orient='records')
         self.delete_and_insert(schema, collection, docs)
