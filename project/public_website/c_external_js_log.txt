@@ -1,0 +1,7 @@
+ConnectionError. Address: https://127.0.0.1:16105/?callback=jQuery18307824027804931222_1543366038014&data=%7B%22cmd%22%3A%22getOsInfo%22%2C%22sid%22%3A%221543366038016%22%2C%22data%22%3A%7B%7D%7D&_=1543366038524
+ConnectionError. Address: https://https://www.hometax.go.kr/https://127.0.0.1:16105/?callback=jQuery18307824027804931222_1543366038014&data=%7B%22cmd%22%3A%22getOsInfo%22%2C%22sid%22%3A%221543366038016%22%2C%22data%22%3A%7B%7D%7D&_=1543366038524
+ConnectionError. Address: http://keypro.clientkeeper.co.kr/beta/2.2.0.50/xecureweb.js
+ConnectionError. Address: https://https://www.mpva.go.kr/http://keypro.clientkeeper.co.kr/beta/2.2.0.50/xecureweb.js
+ConnectionError. Address: http://log.inside.daum.net/dwi_log/js/dwi.js
+ConnectionError. Address: https://https://www.mpva.go.kr/http://log.inside.daum.net/dwi_log/js/dwi.js
+ConnectionError. Address: https://127.0.0.1:49767/ntum/reqeust?callback=jQuery1900049410448425901365_1543367129120&scheme=eyJzb3VyY2UiOjAsImNtZCI6M30%3D&_=1543367129121

@@ -17,8 +17,11 @@ cookies = dict(
     push='E%C2%0F%BB%07%04%29L%2B%C8%8C3%C6%A7%1EP%96%86%2C%C2%E2%A2%3A%DF%F0D%AD%2A%17%1A%AED%F4%3E',
     gtmdlkr='',
 )
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Mobile Safari/537.36'
+}
 
 for i in range(2000):
-    r = requests.get(url, cookies=cookies)
+    r = requests.get(url, cookies=cookies, headers=headers)
     sleep(randint(4, 7))
     print(r.status_code)
