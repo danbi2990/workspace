@@ -3,6 +3,7 @@ import socket
 from urllib.parse import urlencode, quote_plus
 
 import requests
+import numpy as np
 
 
 def get_kakao_api_key():
@@ -56,6 +57,23 @@ def fetch_geo_response_from_kakao(addr, url_type='address'):
 #         return doc['road_address'] or doc['address']
 #     else:
 #         False
+
+
+def get_cvs_geocode(road_addr, loc_name):
+    if road_addr and not np.NaN:
+        without_paren = re.search(r'(.*)\(.+\)', road_addr)
+        if without_paren:
+            addr = without_paren.group(1)
+            # print(addr)
+            res = fetch_geo_response_from_kakao(addr)
+            if res:
+                return res
+    if loc_name:
+        res = fetch_geo_response_from_kakao(loc_name, url_type='keyword')
+        if res:
+            return res
+
+    return None
 
 
 def get_geocode_from_address(road_addr, old_addr, loc_name):

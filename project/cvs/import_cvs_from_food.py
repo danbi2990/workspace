@@ -2,7 +2,7 @@
 import pandas as pd
 #%%
 directory_path = '/Users/jake/OneDrive - leverage innovative users/Documents/편의점/'
-file_name = 'csv_raw.xlsx'
+file_name = 'food_raw.xlsx'
 file_path = directory_path + file_name
 
 #%%
@@ -26,6 +26,7 @@ len(cvs3)
 
 #%%
 cvs3.index
+
 #%%
 cvs_file_name = 'cvs.tsv'
 cvs3.to_csv(directory_path + cvs_file_name, sep='\t', index=False)
