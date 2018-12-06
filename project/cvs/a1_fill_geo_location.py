@@ -21,7 +21,6 @@ i = 0
 buffer_ = []
 
 for idx, row in cvs_tobacco.loc[cvs_tobacco['lat'].isna()].iterrows():
-# for idx, row in cvs_tobacco.iterrows():
     addr = row['도로명전체주소']
     name = row['사업장명']
     doc = get_cvs_geocode(addr, name)
