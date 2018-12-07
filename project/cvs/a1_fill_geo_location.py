@@ -1,6 +1,7 @@
 
 import socket
 from urllib.parse import urlencode, quote_plus
+from time import sleep
 
 import pandas as pd
 import requests
@@ -21,6 +22,7 @@ i = 0
 buffer_ = []
 
 for idx, row in cvs_tobacco.loc[cvs_tobacco['lat'].isna()].iterrows():
+    sleep(0.1)
     addr = row['도로명전체주소']
     name = row['사업장명']
     doc = get_cvs_geocode(addr, name)
