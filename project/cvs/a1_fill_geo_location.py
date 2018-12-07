@@ -46,7 +46,7 @@ for idx, row in cvs_tobacco.loc[cvs_tobacco['lat'].isna()].iterrows():
         error_.append(err)
 
         with MyMongo() as db:
-            db.update_one_bulk('cvs', 'cvs', error_, '관리번호')
+            db.update_one_bulk('cvs', 'error_kakao', error_, '관리번호')
         error_.clear()
         # cvs_tobacco.at[idx, 'lat'] = doc['y']
         # cvs_tobacco.at[idx, 'lng'] = doc['x']
