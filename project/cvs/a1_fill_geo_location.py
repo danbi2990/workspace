@@ -1,4 +1,3 @@
-
 import socket
 from urllib.parse import urlencode, quote_plus
 
@@ -21,15 +20,21 @@ i = 0
 buffer_ = []
 
 for idx, row in cvs_tobacco.loc[cvs_tobacco['lat'].isna()].iterrows():
-    addr = row['도로명전체주소']
+    road_addr = row['도로명전체주소']
+    old_addr = row['소재지전체주소']
     name = row['사업장명']
-    doc = get_cvs_geocode(addr, name)
+    doc = None
+    res = {}
+    doc = get_cvs_geocode(road_addr, old_addr, name)
     if doc:
-        res = {}
         res['관리번호'] = row['관리번호']
         res['lat'] = doc['y']
         res['lng'] = doc['x']
         buffer_.append(res)
+    else:
+        print(road_addr)
+        print(old_addr)
+        print(name)
         # cvs_tobacco.at[idx, 'lat'] = doc['y']
         # cvs_tobacco.at[idx, 'lng'] = doc['x']
 
