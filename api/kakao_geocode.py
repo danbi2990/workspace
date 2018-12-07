@@ -59,8 +59,7 @@ def fetch_geo_response_from_kakao(addr, url_type='address'):
 #         False
 
 
-def get_cvs_geocode(road_addr, loc_name):
-    # if road_addr and (road_addr != np.NaN):
+def get_cvs_geocode(road_addr, old_addr, loc_name):
     if type(road_addr) == str:
         without_paren = re.search(r'(.*)\(.+\)', road_addr)
         if without_paren:
@@ -70,15 +69,22 @@ def get_cvs_geocode(road_addr, loc_name):
         if without_comma:
             road_addr = without_comma.group(1)
 
+        road_addr = road_addr.strip()
         res = fetch_geo_response_from_kakao(road_addr)
         if res:
             return res
 
-    if loc_name:
-        res = fetch_geo_response_from_kakao(loc_name, url_type='keyword')
+    if type(old_addr) == str:
+        old_addr = old_addr.strip()
+        res = fetch_geo_response_from_kakao(old_addr)
         if res:
             return res
 
+    if type(loc_name) == str:
+        loc_name = loc_name.strip()
+        res = fetch_geo_response_from_kakao(loc_name, url_type='keyword')
+        if res:
+            return res
     return None
 
 
