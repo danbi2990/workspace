@@ -12,6 +12,7 @@ from api.kakao_geocode import get_cvs_geocode
 
 with MyMongo() as db:
     cvs_tobacco = db.get_df_from_table('cvs', 'cvs')
+    error_kakao = db.get_df_from_table('cvs', 'error_kakao')
 
 # cvs_tobacco = pd.read_csv('cvs_all_lat_lng.tsv', sep='\t', dtype=object).drop_duplicates(['관리번호'])
 
@@ -21,7 +22,9 @@ i = 0
 buffer_ = []
 error_ = []
 
-for idx, row in cvs_tobacco.loc[cvs_tobacco['lat'].isna()].iterrows():
+idx_lat_isna = cvs_tobacco['lat'].isna()
+idx_error = cvs_tobacco['관리번호'].isin(error_kakao['관리번호'])
+for idx, row in cvs_tobacco.loc[idx_lat_isna & (~idx_error)].iterrows():
     sleep(0.1)
     road_addr = row['도로명전체주소']
     old_addr = row['소재지전체주소']
