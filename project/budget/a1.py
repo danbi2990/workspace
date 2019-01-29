@@ -1,7 +1,7 @@
 from collections import defaultdict
 from collections import Counter
 
-from konlpy.tag import Mecab
+from konlpy.tag import Mecab, Kkma
 import pandas as pd
 
 directory = '/Users/jake/OneDrive - leverage innovative users/Documents/예산/'
